@@ -45,10 +45,10 @@ else
 
 fi
 
-# BEGIN Travis fold/timer support
+# BEGIN fold/timer support
 
-openssl des3 -d -in ./etc/travis/travis-gcp-deploy.json.des3 -out ./etc/travis/travis-gcp-deploy.json -pass pass:$GCP_CREDENTIALS
-gcloud auth activate-service-account --key-file=etc/travis/travis-gcp-deploy.json
+openssl des3 -d -in ./.github/deploy/gcp-deploy.json.des3 -out ./.github/deploy/gcp-deploy.json -pass pass:$GCP_CREDENTIALS
+gcloud auth activate-service-account --key-file=.github/deploy/gcp-deploy.json
 
 activity=""
 timer_id=""
@@ -89,7 +89,7 @@ log_end() {
     start_time=""
 }
 
-# END Travis fold/timer support
+# END fold/timer support
 
 discovered_files=""
 for ext in ${DEPLOY_EXTENSIONS}

@@ -74,7 +74,7 @@ jobs:
 ```
 
 Generate a [GCP Service account](https://developers.google.com/identity/protocols/oauth2/service-account)
-Encrypt with openssl des3 with a strong password and save to your project in /github/deploy/gcp-deploy.json.des3
+Encrypt with openssl des3 with a strong password and save to your project in /.github/deploy/gcp-deploy.json.des3
 Ex : `openssl des3 -in credentials.json -out gcp-deploy.json.des3.des3`
 
 In Github Actions set DEPLOY_BUCKET and GCP_CREDENTIALS environmental variables

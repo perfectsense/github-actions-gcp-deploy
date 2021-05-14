@@ -47,8 +47,8 @@ fi
 
 # BEGIN fold/timer support
 
-openssl des3 -d -in ./.github/deploy/gcp-deploy.json.des3 -out ./.github/deploy/gcp-deploy.json -pass pass:$GCP_CREDENTIALS
-gcloud auth activate-service-account --key-file=.github/deploy/gcp-deploy.json
+openssl des3 -d -in ./.github/gcp-deploy.json.des3 -out ./.github/gcp-deploy.json -pass pass:$GCP_CREDENTIALS
+gcloud auth activate-service-account --key-file=.github/gcp-deploy.json
 
 activity=""
 timer_id=""

@@ -49,7 +49,7 @@ fi
 echo "OpenSSL"
 openssl version
 
-openssl des3 -d -in .github/gcp-deploy.json.des3 -out .github/gcp-deploy.json -pass pass:$DEPOLOY_CREDENTIALS
+openssl des3 -d -in .github/gcp-deploy.json.des3 -out .github/gcp-deploy.json -pass pass:$DEPOLOY_CREDENTIALS -md sha512
 gcloud auth activate-service-account --key-file=.github/gcp-deploy.json
 
 activity=""

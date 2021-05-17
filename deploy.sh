@@ -46,8 +46,11 @@ else
 fi
 
 # BEGIN fold/timer support
+echo "OpenSSL"
+openssl version
 
 openssl des3 -d -in .github/gcp-deploy.json.des3 -out .github/gcp-deploy.json -pass pass:$GCP_CREDENTIALS
+openssl des3 -d -in .github/gcp-deploy.json.des3 -out .github/gcp-deploy.json -pass pass:
 gcloud auth activate-service-account --key-file=.github/gcp-deploy.json
 
 activity=""

@@ -42,6 +42,7 @@ on:
 env:
   GITHUB_ACTIONS_PULL_REQUEST: ${{ github.event.pull_request.number }}
   DEPLOY_SOURCE_DIR: site/build/libs
+  BUILD_NUM_OFFSET: 1000
 
 jobs:
   build:
@@ -50,32 +51,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 8
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
         java-version: '8'
         distribution: 'adopt'
     - name: Get Tag Version
       run: echo "GITHUB_ACTIONS_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
     - name: Clone Github Actions S3 Deploy
-      run: git clone https://github.com/perfectsense/github-actions-s3-deploy.git
+      run: git clone https://github.com/perfectsense/github-actions-gcp-deploy.git
     - name: Build with Gradle
-      run: ./github-actions-s3-deploy/build-gradle.sh
-    - name: Deploy to S3
+      run: ./github-actions-gcp-deploy/build-gradle.sh
+    - name: Deploy to GCP
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         DEPLOY_BUCKET: ${{ secrets.DEPLOY_BUCKET }}
-      run: ./github-actions-s3-deploy/deploy.sh
+        DEPOLOY_CREDENTIALS: ${{ secrets.GCP_CREDE
 
 ```
 
 Generate a [GCP Service account](https://developers.google.com/identity/protocols/oauth2/service-account)
 Encrypt with openssl des3 with a strong password and save to your project in /.github/deploy/gcp-deploy.json.des3
-Ex : `openssl des3 -in credentials.json -out gcp-deploy.json.des3.des3`
+Ex : `openssl des3 -in credentials.json -out gcp-deploy.json.des3 -md sha512`
 
 In Github Actions set DEPLOY_BUCKET and GCP_CREDENTIALS environmental variables
 GCP_CREDENTIALS is the encryption password for the GCP Service Account credentials

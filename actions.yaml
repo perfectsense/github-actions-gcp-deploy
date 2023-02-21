@@ -23,26 +23,6 @@ inputs:
     description: 'Repository image path. This overrides the default which is ${project}'
     required: false
 
-  cloud-aws-account-id:
-    description: 'AWS Account ID of Cloud Project Registry'
-    required: true
-
-  cloud-aws-region:
-    description: 'Region the AWD Cloud Project Registry is in'
-    required: true
-
-  aws-access-key-id:
-    description: 'AWS Access Key ID'
-    required: true
-
-  aws-secret-access-key:
-    description: 'AWS Secret Access Key'
-    required: true
-
-  aws-session-token:
-    description: 'AWS Session Token'
-    required: true
-
   java-distribution:
     description: 'Java distribution'
     required: false
@@ -83,19 +63,6 @@ runs:
       run:  |
         echo "GITHUB_ACTIONS_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
         echo "GITHUB_ACTIONS_PULL_REQUEST=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ inputs.aws-access-key-id }}
-        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
-        aws-session-token: ${{ inputs.aws-session-token }}
-        aws-region: ${{ inputs.cloud-aws-region }}
-
-    - name: Login to Brightspot Cloud ECR
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ inputs.cloud-aws-account-id }}.dkr.ecr.${{ inputs.cloud-aws-region }}.amazonaws.com
 
     # Setup gcloud CLI
     - uses: google-github-actions/auth@v1

@@ -73,10 +73,10 @@ runs:
     # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
-      shell: bash
 
     # Configure docker to use the gcloud command-line tool as a credential helper
-    - run: |
+    - name: Configure docker
+      run: |
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker ${{ inputs.registry }}

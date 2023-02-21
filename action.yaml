@@ -60,6 +60,7 @@ runs:
         distribution: ${{ inputs.java-distribution }}
 
     - name: Get Tag Version
+      shell: bash
       run:  |
         echo "GITHUB_ACTIONS_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
         echo "GITHUB_ACTIONS_PULL_REQUEST=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
@@ -72,6 +73,7 @@ runs:
     # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
+      shell: bash
 
     # Configure docker to use the gcloud command-line tool as a credential helper
     - run: |
@@ -79,11 +81,13 @@ runs:
         # via gcloud command-line tool.
         gcloud auth configure-docker ${{ inputs.registry }}
     - name: Docker test
+      shell: bash
       run: |
         gcloud artifacts docker images list ${{ inputs.registry }}/${{ inputs.project }}/${{ inputs.repository }}
 
     - name: Build Containers
       id: build-container
+      shell: bash
       run: |
         echo "Clone Github Actions GCP Deploy"
         git clone https://github.com/perfectsense/github-actions-gcp-deploy.git

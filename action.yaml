@@ -19,8 +19,8 @@ inputs:
     description: 'Repository name.'
     required: true
 
-  repository-path:
-    description: 'Repository image path. This overrides the default which is ${project}'
+  docker-image-name:
+    description: 'The docker image name to be created for this build. This overrides the default which is ${repository}'
     required: false
 
   java-distribution:
@@ -118,13 +118,13 @@ runs:
         REGISTRY="${{ inputs.registry }}"
         REPOSITORY="${{ inputs.repository }}"
 
-        REPOSITORY_PATH="${{ inputs.repository-path }}"
-        if [ -z ${REPOSITORY_PATH} ]; then
-           REPOSITORY_PATH="$PROJECT"
+        IMAGE_NAME="${{ inputs.docker-image-name }}"
+        if [ -z ${IMAGE_NAME} ]; then
+           IMAGE_NAME="$REPOSITORY"
         fi
 
-        BUILD_TAG="$REGISTRY/$PROJECT/$REPOSITORY/$REPOSITORY_PATH:$build"
-        VERSION_TAG="$REGISTRY/$PROJECT/$REPOSITORY/$REPOSITORY_PATH:$version"
+        BUILD_TAG="$REGISTRY/$PROJECT/$REPOSITORY/$IMAGE_NAME:$build"
+        VERSION_TAG="$REGISTRY/$PROJECT/$REPOSITORY/$IMAGE_NAME:$version"
         docker buildx build --push \
             --build-arg WAR_ARTIFACT=web.war \
               -t $VERSION_TAG \

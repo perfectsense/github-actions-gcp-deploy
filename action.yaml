@@ -120,7 +120,7 @@ runs:
 
         REPOSITORY_PATH="${{ inputs.repository-path }}"
         if [ -z ${REPOSITORY_PATH} ]; then
-           REPOSITORY_PATH="$REPOSITORY_PATH"
+           REPOSITORY_PATH="$PROJECT"
         fi
 
         BUILD_TAG="$REGISTRY/$PROJECT/$REPOSITORY/$REPOSITORY_PATH:$build"

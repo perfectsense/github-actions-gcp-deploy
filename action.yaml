@@ -130,5 +130,5 @@ runs:
               -t $VERSION_TAG \
               -t $BUILD_TAG \
             -f Dockerfile .
-        echo "::set-output name=container-build-tag::$(echo $BUILD_TAG)"
-        echo "::set-output name=container-version-tag::$(echo $VERSION_TAG)"
+        echo "name=container-build-tag::$(echo $BUILD_TAG)" >> $GITHUB_OUTPUT
+        echo "name=container-version-tag::$(echo $VERSION_TAG)" >> $GITHUB_OUTPUT

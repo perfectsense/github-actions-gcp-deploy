@@ -65,21 +65,22 @@ runs:
         echo "GITHUB_ACTIONS_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
         echo "GITHUB_ACTIONS_PULL_REQUEST=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
 
-    # Setup gcloud CLI
-    - uses: google-github-actions/auth@v1
+    - name: Setup gcloud CLI
+      uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ inputs.gcp-gcr-secret-key}}
 
-    # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
 
     # Configure docker to use the gcloud command-line tool as a credential helper
     - name: Configure docker
+      shell: bash
       run: |
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker ${{ inputs.registry }}
+    
     - name: Docker test
       shell: bash
       run: |

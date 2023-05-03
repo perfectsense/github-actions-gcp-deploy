@@ -38,6 +38,11 @@ inputs:
     required: false
     default: 'web/build/libs'
 
+  gcloud-version:
+    description: "The version of gcloud to be installed. Default is 'latest'. Can be set to value by specying the version like '= 417.0.1' for exact match or '>= 417.0.1' for anything above this version match"
+    required: false
+    default: 'latest'
+
 
 outputs:
   container-build-tag:
@@ -72,6 +77,8 @@ runs:
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: "${{ inputs.gcloud-version }}"
 
     # Configure docker to use the gcloud command-line tool as a credential helper
     - name: Configure docker
